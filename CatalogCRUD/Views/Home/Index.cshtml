@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="tableBlock"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        GetAllProducts();
+    });
+    // Получение каталога товара по ajax-запросу
+    function GetAllProducts() {
+
+        
+        $.ajax({
+            url: 'http://localhost:51210/api/products',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                WriteResponse(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+ 
+ // вывод полученных данных на экран
+    function WriteResponse(books) {
+        var strResult = "<table><th>ID</th><th>Название</th><th>Описание</th><th>Цена</th><th>Фото</th><th>Категория</th>";
+        $.each(products, function (index, product) {
+            strResult += "<tr><td>" + product.Id + "</td><td>" + product.Name + "</td><td>" +
+            product.Description + "</td><td>" + product.Price + "</td><td>" + product.Image + "</td><td>" + product.Category +
+            "</td><td><a id='editItem' data-item='" + product.Id + "' onclick='EditItem(this);' >Редактировать</a></td>" +
+            "<td><a id='delItem' data-item='" + product.Id + "' onclick='DeleteItem(this);' >Удалить</a></td></tr>";
+        });
+        strResult += "</table>";
+        $("#tableBlock").html(strResult);
+         
+    }
+     
+      
+</script>

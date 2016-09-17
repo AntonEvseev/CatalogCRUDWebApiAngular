@@ -1,0 +1,174 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myapp">
+<head>
+    <title>Catalog</title>
+    <script src="~/Scripts/angular.min.js"></script>
+    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body ng-controller="productController">
+    <br /><br /><br /><br />
+    @*<p><a data-ng-click="showadd()" data-toggle="modal"*@ @*data-target="#basicModal" href="javascript:;" class="btn btn-primary">Добавить товар</a></p>*@
+    <p data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New</a></p>
+    <form name="addProduct" data-ng-show="addMode" style="width:600px;margin:0px auto;">
+        <div class="form-group">
+            <label for="cid" class="col-sm-2 control-label">ID:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="cid" placeholder="please enter id" data-ng-model="newcustomer.Id" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cname" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="cname" placeholder="please enter your name" data-ng-model="newcustomer.Name" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address" class="col-sm-2 control-label">Address:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="address" placeholder="please enter your address" data-ng-model="newcustomer.Address" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="city" class="col-sm-2 control-label">City:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="city" placeholder="please enter your city" data-ng-model="newcustomer.City" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="country" class="col-sm-2 control-label">Country:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="country" placeholder="please enter your country" data-ng-model="newcustomer.Country" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="age" class="col-sm-2 control-label">Age:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="age" placeholder="please enter your age" data-ng-model="newcustomer.Age" required />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Add" data-ng-click="add()" data-ng-disabled="!addCustomer.$valid" class="btn btn-primary" />
+                <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+            </div>
+        </div>
+        <br />
+    </form>
+    <br /><br /><br /><br />
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th>Название товара</th>
+                <th>Описание</th>
+                <th>Цена</th>
+                <th>Фото</th>
+                <th>Категория</th>
+            </tr>
+            <tr ng-repeat="product in result">
+                <td>{{product.Name}}</td>
+                <td>{{product.Description}}</td>
+                <td>{{product.Price}}</td>
+                <td>{{product.Image}}</td>
+                <td>{{product.Category.Name}}</td>
+            </tr>
+        </table>
+   
+
+
+
+
+    @*<div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">x</button>
+                    <h4 class="modal-title" id="myModalLabel">Название модального окна</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Содержимое модального окна</h3>
+                    <form name="addProduct" >
+                        <div class=" form-group">
+                            <label for="name" class="col-sm-2 control-label">Имя товара:</label>
+                            <div>
+                                <input type="text" class="form-control" id="name" placeholder="Введите название товара" data-ng-model="newproduct.Name" required />
+                            </div>
+                            <label for="description" class="control-label">Описание</label>
+                            <div>
+                                <input type="text" class="form-control" id="description" placeholder="Введите описание товара" data-ng-model="newproduct.Description" required />
+                            </div>
+                            <label for="image" class="control-label">Фото</label>
+                            <div>
+                                <input type="text" class="form-control" id="image" placeholder="Добавьте фото" data-ng-model="newproduct.Image" required />
+                            </div>
+                            <label for="price" class="control-label">Цена</label>
+                            <div>
+                                <input type="text" class="form-control" id="price" placeholder="Введите цену товара" data-ng-model="newproduct.Price" required />
+                            </div>
+                            <label for="category" class="control-label">Категория:</label>
+                            <div>
+                                <input type="text" class="form-control" id="category" placeholder="Введите категорию товара" data-ng-model="newproduct.Category.Name" required />
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="button" ng-click="addProduct(newproduct.Name + newproduct.Description + newproduct.Price + newproduct.Image + newproduct.Category.Name)">Сохранить изменения</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-primary" type="button" ng-click="addProduct(newproduct.Name + newproduct.Description + newproduct.Price + newproduct.Image + newproduct.Category.Name)">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+        <script type="text/javascript">
+            var myapp = angular.module('myapp', []);
+            myapp.controller('productController', function ($scope, $http) {
+                $http.get("http://localhost:51210/api/products").success(function (response) {
+                    $scope.result = response;
+                });
+
+                $scope.addProduct = function (path) {
+
+                    $http.post("http://localhost:51210/api/products" + path).success(function (response) {
+                        $scope.li = response;
+                    });
+
+                    //by pressing toggleEdit button ng-click in html, this method will be hit
+                    $scope.toggleEdit = function () {
+                        this.customer.editMode = !this.customer.editMode;
+                    };
+                    //by pressing toggleAdd button ng-click in html, this method will be hit
+                    $scope.toggleAdd = function () {
+                        $scope.addMode = !$scope.addMode;
+                    };
+
+                    //Inser Customer
+                    $scope.add = function () {
+                        $scope.loading = true;
+                        $http.post('/api/Customer/', this.newcustomer).success(function (data) {
+                            alert("Added Successfully!!");
+                            $scope.addMode = false;
+                            $scope.customers.push(data);
+                            $scope.loading = false;
+                        }).error(function (data) {
+                            $scope.error = "An Error has occured while Adding Customer! " + data;
+                            $scope.loading = false;
+                        });
+                    };
+                   
+
+
+                };
+            });
+        </script>
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    
+    
+</body>
+</html>
